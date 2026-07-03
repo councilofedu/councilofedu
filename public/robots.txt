@@ -8,4 +8,4 @@ Disallow: /admin
 Disallow: /api/
 
 # Sitemap URL
-Sitemap: https://mathscouncil.edu.np/sitemap.xml
+Sitemap: https://councilofedu.vercel.app/sitemap.xml
