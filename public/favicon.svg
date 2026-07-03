@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Round white background container with soft border -->
+  <rect x="2" y="2" width="96" height="96" rx="20" fill="#ffffff" stroke="#1e5894" stroke-width="4" />
+  
+  <g transform="translate(5, 5) scale(0.9)">
+    <!-- Pagoda Roof -->
+    <polygon points="50,5 95,28 5,28" fill="#1e5894" opacity="0.15" stroke="#1e5894" stroke-width="3" />
+    <polygon points="50,15 85,32 15,32" fill="#1e5894" stroke="#1e5894" stroke-width="2" />
+    
+    <!-- Abacus frame -->
+    <rect x="20" y="32" width="60" height="52" rx="2" fill="none" stroke="#1e5894" stroke-width="4" />
+    
+    <!-- Horizontal separator -->
+    <line x1="20" y1="48" x2="80" y2="48" stroke="#1e5894" stroke-width="3" />
+    
+    <!-- Vertical wires -->
+    <line x1="32" y1="32" x2="32" y2="84" stroke="#1e5894" stroke-width="1.5" />
+    <line x1="44" y1="32" x2="44" y2="84" stroke="#1e5894" stroke-width="1.5" />
+    <line x1="56" y1="32" x2="56" y2="84" stroke="#1e5894" stroke-width="1.5" />
+    <line x1="68" y1="32" x2="68" y2="84" stroke="#1e5894" stroke-width="1.5" />
+
+    <!-- Upper deck beads -->
+    <circle cx="32" cy="40" r="3.5" fill="#1e5894" />
+    <circle cx="44" cy="40" r="3.5" fill="#1e5894" />
+    <circle cx="56" cy="40" r="3.5" fill="#1e5894" />
+    <circle cx="68" cy="40" r="3.5" fill="#1e5894" />
+
+    <!-- Lower deck beads -->
+    <circle cx="32" cy="55" r="3.5" fill="#1e5894" />
+    <circle cx="32" cy="62" r="3.5" fill="#1e5894" />
+    <circle cx="44" cy="69" r="3.5" fill="#1e5894" />
+    <circle cx="44" cy="76" r="3.5" fill="#1e5894" />
+    <circle cx="56" cy="55" r="3.5" fill="#1e5894" />
+    <circle cx="56" cy="62" r="3.5" fill="#1e5894" />
+    <circle cx="68" cy="62" r="3.5" fill="#1e5894" />
+    <circle cx="68" cy="69" r="3.5" fill="#1e5894" />
+  </g>
+</svg>

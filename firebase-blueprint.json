@@ -1,0 +1,208 @@
+{
+  "entities": {
+    "Membership": {
+      "title": "Membership",
+      "description": "CME Membership registration document",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "serialNo": { "type": "string" },
+        "membershipType": { "type": "string" },
+        "fullName": { "type": "string" },
+        "gender": { "type": "string" },
+        "qualification": { "type": "string" },
+        "affiliation": { "type": "string" },
+        "contactAddress": { "type": "string" },
+        "mobileNo": { "type": "string" },
+        "officeContactNo": { "type": "string" },
+        "email": { "type": "string" },
+        "institution": { "type": "string" },
+        "designation": { "type": "string" },
+        "paymentMethod": { "type": "string" },
+        "voucherNo": { "type": "string" },
+        "paymentDate": { "type": "string" },
+        "status": { "type": "string" },
+        "submittedAt": { "type": "string" },
+        "membershipId": { "type": "string" }
+      },
+      "required": ["fullName", "email", "membershipType"]
+    },
+    "TeamMember": {
+      "title": "TeamMember",
+      "description": "CME Team Member registration document",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "fullName": { "type": "string" },
+        "role": { "type": "string" },
+        "category": { "type": "string" },
+        "bio": { "type": "string" },
+        "affiliation": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "status": { "type": "string" },
+        "submittedAt": { "type": "string" }
+      },
+      "required": ["fullName", "email", "role"]
+    },
+    "Inquiry": {
+      "title": "Inquiry",
+      "description": "User Inquiry submission",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "fullName": { "type": "string" },
+        "email": { "type": "string" },
+        "subject": { "type": "string" },
+        "message": { "type": "string" },
+        "submittedAt": { "type": "string" }
+      },
+      "required": ["fullName", "email", "subject", "message"]
+    },
+    "SiteSettings": {
+      "title": "SiteSettings",
+      "description": "General CME Website text and configuration",
+      "type": "object",
+      "properties": {
+        "homeTitle": { "type": "string" },
+        "homeSubtitle": { "type": "string" },
+        "homeNoticeBanner": { "type": "string" },
+        "aboutHomeTitle": { "type": "string" },
+        "aboutHomeText": { "type": "string" },
+        "ctaButtonText": { "type": "string" },
+        "supportEmail": { "type": "string" },
+        "supportPhone": { "type": "string" }
+      }
+    },
+    "BlogPost": {
+      "title": "BlogPost",
+      "description": "CME Academic blog or news post",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "excerpt": { "type": "string" },
+        "content": { "type": "string" },
+        "category": { "type": "string" },
+        "author": { "type": "string" },
+        "status": { "type": "string" },
+        "date": { "type": "string" },
+        "imageUrl": { "type": "string" }
+      },
+      "required": ["title", "content"]
+    },
+    "Testimonial": {
+      "title": "Testimonial",
+      "description": "Teacher/User testimonial",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "designation": { "type": "string" },
+        "affiliation": { "type": "string" },
+        "message": { "type": "string" },
+        "rating": { "type": "number" },
+        "status": { "type": "string" },
+        "date": { "type": "string" }
+      },
+      "required": ["name", "message"]
+    },
+    "FAQ": {
+      "title": "FAQ",
+      "description": "Frequently Asked Question",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "question": { "type": "string" },
+        "answer": { "type": "string" },
+        "category": { "type": "string" },
+        "order": { "type": "number" }
+      },
+      "required": ["question", "answer"]
+    },
+    "SEOMeta": {
+      "title": "SEOMeta",
+      "description": "Page-specific SEO meta tags (title, description, keywords)",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "keywords": { "type": "string" }
+      },
+      "required": ["title", "description"]
+    },
+    "Newsletter": {
+      "title": "Newsletter",
+      "description": "Bulk email newsletter campaign history record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "subject": { "type": "string" },
+        "content": { "type": "string" },
+        "sentAt": { "type": "string" },
+        "recipientsCount": { "type": "number" },
+        "recipientEmails": { "type": "string" },
+        "templateName": { "type": "string" },
+        "status": { "type": "string" },
+        "targetAudience": { "type": "string" }
+      },
+      "required": ["subject", "content", "sentAt"]
+    },
+    "UserRecord": {
+      "title": "UserRecord",
+      "description": "Custom registered user profile document",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "fullName": { "type": "string" },
+        "email": { "type": "string" },
+        "phoneNumber": { "type": "string" },
+        "registeredAt": { "type": "string" }
+      },
+      "required": ["fullName", "email"]
+    }
+  },
+  "firestore": {
+    "memberships": {
+      "schema": "Membership",
+      "description": "Collection of all CME membership registrations"
+    },
+    "teamMembers": {
+      "schema": "TeamMember",
+      "description": "Collection of all CME team member registrations"
+    },
+    "inquiries": {
+      "schema": "Inquiry",
+      "description": "Collection of user inquiries"
+    },
+    "siteSettings": {
+      "schema": "SiteSettings",
+      "description": "Singleton site settings collection"
+    },
+    "blogs": {
+      "schema": "BlogPost",
+      "description": "Collection of academic blogs and news posts"
+    },
+    "testimonials": {
+      "schema": "Testimonial",
+      "description": "Collection of testimonials"
+    },
+    "faqs": {
+      "schema": "FAQ",
+      "description": "Collection of Frequently Asked Questions"
+    },
+    "seoMeta": {
+      "schema": "SEOMeta",
+      "description": "Collection of page-specific SEO meta tags"
+    },
+    "newsletters": {
+      "schema": "Newsletter",
+      "description": "Collection of sent bulk email updates and campaigns"
+    },
+    "users": {
+      "schema": "UserRecord",
+      "description": "Collection of all registered CME user profiles"
+    }
+  }
+}

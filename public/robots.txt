@@ -1,0 +1,11 @@
+# Robots.txt for Council for Mathematics Education (CME)
+
+User-agent: *
+Allow: /
+
+# Disallow crawling of administrative dashboards and APIs
+Disallow: /admin
+Disallow: /api/
+
+# Sitemap URL
+Sitemap: https://mathscouncil.edu.np/sitemap.xml

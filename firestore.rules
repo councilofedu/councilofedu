@@ -1,0 +1,152 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Global safety net: Default Deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // --- REUSABLE SECURITY PRIMITIVES ---
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isVerifiedUser() {
+      return isSignedIn() && (request.auth.token.email_verified == true || request.auth.token.firebase.sign_in_provider == 'anonymous');
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid)) || 
+        request.auth.token.email == 'bishalmishra9000@gmail.com' ||
+        request.auth.token.email == 'councilofedu@gmail.com' ||
+        request.auth.token.email == 'janaksinghkarki21@gmail.com' ||
+        request.auth.token.email == 'mathscouncil@gmail.com'
+      );
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // --- COLLECTION VALIDATIONS ---
+
+    // 1. Memberships Collection
+    match /memberships/{membershipId} {
+      allow read: if isAdmin() || (isSignedIn() && resource.data.email == request.auth.token.email);
+      allow create: if isAdmin() || (
+                      isVerifiedUser() && 
+                      isValidId(membershipId) &&
+                      request.resource.data.keys().hasAll(['fullName', 'email', 'membershipType']) &&
+                      request.resource.data.fullName is string && request.resource.data.fullName.size() <= 100 &&
+                      request.resource.data.email is string && request.resource.data.email.size() <= 100 &&
+                      request.resource.data.membershipType is string &&
+                      request.resource.data.status == 'Pending'
+                    );
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // 2. Team Members Collection
+    match /teamMembers/{memberId} {
+      allow read: if resource.data.status == 'Approved' || isAdmin();
+      allow create: if isAdmin() || (
+                      isVerifiedUser() && 
+                      isValidId(memberId) &&
+                      request.resource.data.keys().hasAll(['fullName', 'email', 'role']) &&
+                      request.resource.data.fullName is string && request.resource.data.fullName.size() <= 100 &&
+                      request.resource.data.email is string && request.resource.data.email.size() <= 100 &&
+                      request.resource.data.status == 'Pending'
+                    );
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // 3. Inquiries Collection
+    match /inquiries/{inquiryId} {
+      allow read: if isAdmin();
+      allow create: if request.resource.data.keys().hasAll(['fullName', 'email', 'subject', 'message']) &&
+                      request.resource.data.fullName is string && request.resource.data.fullName.size() <= 100 &&
+                      request.resource.data.email is string && request.resource.data.email.size() <= 100 &&
+                      request.resource.data.subject is string && request.resource.data.subject.size() <= 200 &&
+                      request.resource.data.message is string && request.resource.data.message.size() <= 5000;
+      allow update, delete: if isAdmin();
+    }
+
+    // 4. Site Settings Collection (usually a single document settings/current)
+    match /siteSettings/{settingId} {
+      allow read: if true; // Publicly readable settings
+      allow write: if isAdmin();
+    }
+
+    // 5. Blogs Collection
+    match /blogs/{blogId} {
+      allow read: if true;
+      allow create, delete: if isAdmin();
+      allow update: if isAdmin() || (
+        request.resource.data.status == 'Published' &&
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['watchCount'])
+      );
+    }
+
+    // 6. Testimonials Collection
+    match /testimonials/{testimonialId} {
+      allow read: if resource.data.status == 'Approved' || isAdmin();
+      allow create: if isAdmin() || (
+                      request.resource.data.keys().hasAll(['name', 'message']) &&
+                      request.resource.data.name is string && request.resource.data.name.size() <= 100 &&
+                      request.resource.data.message is string && request.resource.data.message.size() <= 1000 &&
+                      request.resource.data.status == 'Pending'
+                    );
+      allow update, delete: if isAdmin();
+    }
+
+    // 7. FAQs Collection
+    match /faqs/{faqId} {
+      allow read: if true; // Publicly readable
+      allow write: if isAdmin();
+    }
+
+    // 7.1 Programs Collection
+    match /programs/{programId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // 7.2 Publications Collection
+    match /publications/{pubId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // 7.3 Visitor Presence Collection (for real-time visitor count)
+    match /visitorPresence/{presenceId} {
+      allow read, write: if true;
+    }
+
+    // 7.4 SEO Meta Tags Collection
+    match /seoMeta/{routeId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // 7.5 Newsletters Collection
+    match /newsletters/{newsletterId} {
+      allow read, write: if isAdmin();
+    }
+
+    // 8. Admins Collection
+    match /admins/{adminId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // 9. Registered Users Collection
+    match /users/{userId} {
+      allow read: if isAdmin() || (isSignedIn() && (userId == request.auth.uid || resource.data.email == request.auth.token.email));
+      allow create, update: if isSignedIn();
+      allow delete: if isAdmin();
+    }
+  }
+}

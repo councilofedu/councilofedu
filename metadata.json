@@ -1,0 +1,6 @@
+{
+  "name": "Council for Mathematics Education",
+  "description": "A modern portal for the Council for Mathematics Education including membership application, team registration, public resources, and an admin management dashboard.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
